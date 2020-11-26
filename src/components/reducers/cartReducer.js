@@ -5,6 +5,8 @@ import Item4 from '../../images/item4.jpg';
 import Item5 from '../../images/item5.jpg';
 import Item6 from '../../images/item6.jpg';
 
+import { ADD_TO_CART } from '../actions/cartActions';
+
 const initState = {
     items: [
         {id:1,title:'Razer BlackWidow', desc: "The Razer BlackWidow Elite is designed specifically for gaming as it features the Razer Green mechanical keys for unprecedented speed and responsiveness.", price:115,img:Item1},
@@ -14,11 +16,37 @@ const initState = {
         {id:5,title:'iiyama ProLite', desc: "The iiyama ProLite XB3270QS-B1 is a 32\" WQHD display designed for graphic designers. Thanks to the 2560 x 1440 resolution, your images are clearer and more detailed than on Full HD displays.", price:160,img: Item5},
         {id:6,title:'ALTERNATE Gamer', desc: "The Alternate Gamer iCUE Certified RTX 3090 is the cream of the crop in terms of both performance and appearance. There isn't a mouth that doesn't stay open when you show off this superior build.",price:3999,img: Item6}
     ],
+    addedItems: [],
     total: 0,
     qtItems: 0
 }
 
 const cartReducer = (state = initState, action) => {
-    return state;
+    switch(action.type){
+        case ADD_TO_CART:
+            let addedItem = state.items.find(item=> item.id === action.id)
+            let existed_item= state.addedItems.find(item=> action.id === item.id)
+            if(existed_item)
+            {
+                addedItem.quantity += 1 
+                return{
+                    ...state,
+                    total: state.total + addedItem.price,
+                    qtItems: state.qtItems + 1
+                }
+            }
+            else{
+                addedItem.quantity = 1;
+                let newTotal = state.total + addedItem.price 
+                return{
+                    ...state,
+                    addedItems: [...state.addedItems, addedItem],
+                    total : newTotal,
+                    qtItems: state.qtItems + 1
+                }
+            }
+        default:
+            return state
+    }
 }
 export default cartReducer;
