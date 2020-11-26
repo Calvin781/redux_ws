@@ -5,7 +5,7 @@ import Item4 from '../../images/item4.jpg';
 import Item5 from '../../images/item5.jpg';
 import Item6 from '../../images/item6.jpg';
 
-import { ADD_TO_CART } from '../actions/cartActions';
+import { ADD_TO_CART, ADD_QUANTITY, SUB_QUANTITY} from '../actions/cartActions';
 
 const initState = {
     items: [
@@ -43,6 +43,37 @@ const cartReducer = (state = initState, action) => {
                     addedItems: [...state.addedItems, addedItem],
                     total : newTotal,
                     qtItems: state.qtItems + 1
+                }
+            }
+        case ADD_QUANTITY:
+            let addedQuantity = state.items.find(item=> item.id === action.id)
+            addedQuantity.quantity += 1 
+            let addNewTotal = state.total + addedQuantity.price
+            return{
+                ...state,
+                total: addNewTotal,
+                qtItems: state.qtItems + 1
+            }
+        case SUB_QUANTITY:
+            let subQuantity = state.items.find(item=> item.id === action.id) 
+            //if the qt == 0 then it should be removed
+            if(subQuantity.quantity === 1){
+                let new_items = state.addedItems.filter(item=>item.id !== action.id)
+                let subNewTotal = state.total - subQuantity.price
+                return{
+                    ...state,
+                    addedItems: new_items,
+                    total: subNewTotal,
+                    qtItems: state.qtItems - 1
+                }
+            }
+            else {
+                subQuantity.quantity -= 1
+                let subNewTotal = state.total - subQuantity.price
+                return{
+                    ...state,
+                    total: subNewTotal,
+                    qtItems: state.qtItems - 1
                 }
             }
         default:

@@ -4,7 +4,17 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Recipe from './Recipe';
 
+import {addQuantity, subtractQuantity} from './actions/cartActions';
+
 class Cart extends Component{
+    handleAddQuantity = (id)=>{
+        this.props.addQuantity(id);
+    }
+
+    handleSubtractQuantity = (id)=>{
+        this.props.subtractQuantity(id);
+    }
+
     render(){
         let addedItems = this.props.items.length ?
             (  
@@ -23,8 +33,8 @@ class Cart extends Component{
                                     <b>Quantity: {item.quantity}</b> 
                                 </p>
                                 <div className="add-remove">
-                                    <Link to="/cart"><i className="material-icons">arrow_drop_up</i></Link>
-                                    <Link to="/cart"><i className="material-icons">arrow_drop_down</i></Link>
+                                    <Link to="/cart"><i className="material-icons" onClick={()=>{this.handleAddQuantity(item.id)}}>arrow_drop_up</i></Link>
+                                    <Link to="/cart"><i className="material-icons" onClick={()=>{this.handleSubtractQuantity(item.id)}}>arrow_drop_down</i></Link>
                                 </div>
                                 <button className="waves-effect waves-light btn pink remove">Remove</button>
                             </div>                                    
@@ -54,4 +64,10 @@ const mapStateToProps = (state)=>{
     }
 }
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        addQuantity: (id)=>{dispatch(addQuantity(id))},
+        subtractQuantity: (id)=>{dispatch(subtractQuantity(id))}
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
