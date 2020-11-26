@@ -13,5 +13,12 @@ const initState = {
         {id:4,title:'ASUS Z11PA-D8', desc: "With the ASUS Z11PA-D8 motherboard you have a solid base to accommodate up to 2 Intel Xeon LGA 3647 processors.", price:670,img:Item4},
         {id:5,title:'iiyama ProLite', desc: "The iiyama ProLite XB3270QS-B1 is a 32\" WQHD display designed for graphic designers. Thanks to the 2560 x 1440 resolution, your images are clearer and more detailed than on Full HD displays.", price:160,img: Item5},
         {id:6,title:'ALTERNATE Gamer', desc: "The Alternate Gamer iCUE Certified RTX 3090 is the cream of the crop in terms of both performance and appearance. There isn't a mouth that doesn't stay open when you show off this superior build.",price:3999,img: Item6}
-    ]
+    ],
+    total: 0,
+    qtItems: 0
 }
+
+const cartReducer = (state = initState, action) => {
+    return state;
+}
+export default cartReducer;
