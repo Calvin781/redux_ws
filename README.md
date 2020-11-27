@@ -2,10 +2,10 @@
 
 Participant :
 
-- [Calvin](https://github.com/Calvin781)
-- [Gerardo](https://github.com/gerardoCella7)
-- [Maxendre](https://github.com/MaxendreMartin)
-- [Stéphane](https://github.com/kalonjis)
+-   [Calvin](https://github.com/Calvin781)
+-   [Gerardo](https://github.com/gerardoCella7)
+-   [Maxendre](https://github.com/MaxendreMartin)
+-   [Stéphane](https://github.com/kalonjis)
 
 ## Etape d'installation à partir de rien
 
@@ -21,4 +21,10 @@ Participant :
 
 ## Quand toute l'installation est complétée
 
-- `npm start`
+-   `npm start`
+
+# Source de l'atelier
+
+-   [Les slides](https://docs.google.com/presentation/d/18xLduG-bNmM7k53NxWvRWjB2EJge7GRydGy_0MDRywQ/edit?usp=sharing)
+
+-   [Step by step](Step.md)
