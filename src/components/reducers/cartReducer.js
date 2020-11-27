@@ -4,7 +4,7 @@ import Item3 from '../../images/item3.jpg';
 import Item4 from '../../images/item4.jpg';
 import Item5 from '../../images/item5.jpg';
 import Item6 from '../../images/item6.jpg';
-import { ADD_TO_CART, ADD_QUANTITY, SUB_QUANTITY } from '../actions/cartActions';
+import { ADD_TO_CART, ADD_QUANTITY, SUB_QUANTITY, REMOVE_ITEM, ADD_SHIPPING, SUB_SHIPPING } from '../actions/cartActions';
 
 const initState = {
     items: [
@@ -78,6 +78,31 @@ const cartReducer = (state = initState, action) => {
 
                 return { ...state, total : subNewTotal, qtItems: state.qtItems - 1}
             }
+            
+        case REMOVE_ITEM:
+            let itemToRemove = state.addedItems.find(item =>action.id === item.id);
+            let new_items = state.addedItems.filter(item => action.id !== item.id);
+
+            let remNewTotal = state.total -(itemToRemove.price * itemToRemove.quantity);
+            return {
+                ...state,
+                addedItems : new_items,
+                total: remNewTotal,
+                qtItems: state.qtItems - itemToRemove.quantity
+            }
+
+        case ADD_SHIPPING:
+            return{
+                ...state,
+                total: state.total + 6
+            }
+
+        case SUB_SHIPPING:
+            return{
+                ...state,
+                total: state.total - 6
+            }
+
           
         default:
             return state
