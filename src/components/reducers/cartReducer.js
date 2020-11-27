@@ -4,6 +4,7 @@ import Item3 from '../../images/item3.jpg';
 import Item4 from '../../images/item4.jpg';
 import Item5 from '../../images/item5.jpg';
 import Item6 from '../../images/item6.jpg';
+import { ADD_TO_CART } from '../actions/cartActions';
 
 const initState = {
     items: [
@@ -15,12 +16,37 @@ const initState = {
         {id:6,title:'ALTERNATE Gamer', desc: "The Alternate Gamer iCUE Certified RTX 3090 is the cream of the crop in terms of both performance and appearance. There isn't a mouth that doesn't stay open when you show off this superior build.",price:3999,img: Item6}
     ],
     total : 0,
-    qtItems:0
+    qtItems:0,
+    addedItems: []
 }
 
 const cartReducer = (state= initState , action) =>{
 
-    return state
+    switch(action.type){
+
+        case ADD_TO_CART:
+            let addedItem = state.items.find(item => item.id === action.id);
+            let existed_item = state.addedItems.find(item => action.id === item.id);
+            if(existed_item){
+                addedItem.quantity += 1;
+                return {
+                    ...state,
+                    total: state.total + addedItem.price,
+                    qtItems: state.qtItems + 1
+                }
+            }else{
+                addedItem.quantity = 1;
+                let newTotal = state.total + addedItem.price;
+                return {
+                    ...state,
+                    addedItems: [...state.addedItems, addedItem],
+                    total: newTotal,
+                    qtItems: state.qtItems + 1
+                }
+            }
+        default:
+            return state
+    }
 }
 
 
